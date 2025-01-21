@@ -16,7 +16,7 @@ public class NormalEnemy : MonoBehaviour
     void Start()
     {
         // Get the Animator component from the child object "sword"
-        swordAnimator = transform.Find("EnemySword").GetComponent<Animator>();
+        swordAnimator = GetComponent<Animator>();
     }
 
     void Update()
@@ -33,7 +33,7 @@ public class NormalEnemy : MonoBehaviour
                 transform.position += direction * speed * Time.deltaTime;
 
                 // Rotate to face the player
-                Quaternion lookRotation = Quaternion.LookRotation(-direction);
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
                 swordAnimator.SetBool("IsAttacking", false);
             }
