@@ -32,11 +32,12 @@ public class Enemy : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if (Vector3.Distance(transform.position, player.position) < stoppingDistance * 1.5f  && canDodge)
+            if (distanceToPlayer < stoppingDistance * 1.5f && canDodge)
             {
                 Dodge();
-                Debug.Log("doge");
+                Debug.Log("Dodge");
             }
+
             if (distanceToPlayer > stoppingDistance)
             {
                 Vector3 direction = (player.position - transform.position).normalized;
@@ -46,7 +47,7 @@ public class Enemy : MonoBehaviour
                 Quaternion lookRotation = Quaternion.LookRotation(-direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
-                swordAnimator.SetBool("IsAttacking", false);
+                swordAnimator.SetBool("IsAttacking", false); // Stop attack when moving
             }
             else
             {
@@ -58,19 +59,34 @@ public class Enemy : MonoBehaviour
 
                     Debug.Log("Attack: " + attackType);
 
-                    Invoke(nameof(StopAttack), 1);
+                    // Get the current attack animation length
+                    float attackAnimationLength = GetAttackAnimationLength();
+
+                    // Stop the attack after the animation finishes
+                    Invoke(nameof(StopAttack), attackAnimationLength);
+
                     // Update last attack time
                     lastAttackTime = Time.time;
                 }
             }
         }
     }
+
+    float GetAttackAnimationLength()
+    {
+        // Get the current animation state info
+        AnimatorStateInfo stateInfo = swordAnimator.GetCurrentAnimatorStateInfo(0);
+
+        // Return the length of the animation
+        return stateInfo.length;
+    }
+
     void StopAttack()
     {
-        swordAnimator.SetBool("IsAttacking", false);
-        swordAnimator.SetInteger("AttackType", 5);
-        Debug.Log("STOP Attack");
+        //swordAnimator.SetBool("IsAttacking", false);
+        swordAnimator.SetInteger("AttackType", 5); // Reset attack type (optional)
     }
+
     void Dodge()
     {
         if (!canDodge) return;
