@@ -6,15 +6,16 @@ public class Enemy : MonoBehaviour
 {
     private bool canDie = false;
 
-    public Transform player; 
-    public float speed = 5f; 
-    public float rotationSpeed = 5f; 
+    public Transform player;
+    public float speed = 5f;
+    public float rotationSpeed = 5f;
     public float stoppingDistance = 2f;
+    public float agroDistance = 10f; // Distance at which the enemy starts reacting to the player
 
-    public float dodgeSpeed = 10f;  
-    public float dodgeDistance = 3f; 
-    public float dodgeCooldown = 2f; 
-    private bool canDodge = true; 
+    public float dodgeSpeed = 10f;
+    public float dodgeDistance = 3f;
+    public float dodgeCooldown = 2f;
+    private bool canDodge = true;
 
     private Animator swordAnimator;
     private int attackType;
@@ -24,50 +25,61 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        swordAnimator = transform.Find("EnemySword").GetComponent<Animator>();
+        swordAnimator = GetComponent<Animator>();
     }
+
     void Update()
     {
         if (player != null)
         {
+            // Calculate the distance to the player
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if (distanceToPlayer < stoppingDistance * 1.5f && canDodge)
+            // Check if the player is within agro distance
+            if (distanceToPlayer <= agroDistance)
             {
-                Dodge();
-                Debug.Log("Dodge");
-            }
+                if (distanceToPlayer < stoppingDistance * 1.5f && canDodge)
+                {
+                    Dodge();
+                    Debug.Log("Dodge");
+                }
 
-            if (distanceToPlayer > stoppingDistance)
-            {
-                Vector3 direction = (player.position - transform.position).normalized;
+                if (distanceToPlayer > stoppingDistance)
+                {
+                    Vector3 direction = (player.position - transform.position).normalized;
 
-                transform.position += direction * speed * Time.deltaTime;
+                    transform.position += direction * speed * Time.deltaTime;
 
-                Quaternion lookRotation = Quaternion.LookRotation(-direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
-                swordAnimator.SetBool("IsAttacking", false); // Stop attack when moving
+                    swordAnimator.SetBool("IsAttacking", false); // Stop attack when moving
+                }
+                else
+                {
+                    if (Time.time >= lastAttackTime + attackCooldown)
+                    {
+                        swordAnimator.SetBool("IsAttacking", true);
+                        attackType = Random.Range(0, 2); // Randomize attack type
+                        swordAnimator.SetInteger("AttackType", attackType);
+
+                        Debug.Log("Attack: " + attackType);
+
+                        // Get the current attack animation length
+                        float attackAnimationLength = GetAttackAnimationLength();
+
+                        // Stop the attack after the animation finishes
+                        Invoke(nameof(StopAttack), attackAnimationLength);
+
+                        // Update last attack time
+                        lastAttackTime = Time.time;
+                    }
+                }
             }
             else
             {
-                if (Time.time >= lastAttackTime + attackCooldown)
-                {
-                    swordAnimator.SetBool("IsAttacking", true);
-                    attackType = Random.Range(0, 2); // Randomize attack type
-                    swordAnimator.SetInteger("AttackType", attackType);
-
-                    Debug.Log("Attack: " + attackType);
-
-                    // Get the current attack animation length
-                    float attackAnimationLength = GetAttackAnimationLength();
-
-                    // Stop the attack after the animation finishes
-                    Invoke(nameof(StopAttack), attackAnimationLength);
-
-                    // Update last attack time
-                    lastAttackTime = Time.time;
-                }
+                // If the player is out of agro distance, idle
+                swordAnimator.SetBool("IsAttacking", false);
             }
         }
     }
@@ -83,7 +95,6 @@ public class Enemy : MonoBehaviour
 
     void StopAttack()
     {
-        //swordAnimator.SetBool("IsAttacking", false);
         swordAnimator.SetInteger("AttackType", 5); // Reset attack type (optional)
     }
 
@@ -94,8 +105,8 @@ public class Enemy : MonoBehaviour
         canDodge = false;
         Vector3 dodgeDirection;
         int randomDirection = Random.Range(0, 3);
-        if (randomDirection == 0) dodgeDirection = -transform.right;  
-        else if (randomDirection == 1) dodgeDirection = transform.right; 
+        if (randomDirection == 0) dodgeDirection = -transform.right;
+        else if (randomDirection == 1) dodgeDirection = transform.right;
         else dodgeDirection = transform.forward;
 
         Vector3 dodgeTarget = transform.position + dodgeDirection * dodgeDistance;

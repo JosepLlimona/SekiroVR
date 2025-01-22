@@ -8,6 +8,7 @@ public class NormalEnemy : MonoBehaviour
     public float speed = 5f; // Movement speed of the enemy
     public float rotationSpeed = 5f; // Speed of rotation to face the player
     public float stoppingDistance = 2f; // Distance at which the enemy stops moving
+    public float agroDistance = 10f; // Distance at which the enemy starts chasing the player
 
     private bool isAttacking = false;
 
@@ -26,25 +27,37 @@ public class NormalEnemy : MonoBehaviour
             // Calculate the distance to the player
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            // If the enemy is farther than the stopping distance, move towards the player
-            if (distanceToPlayer > stoppingDistance)
+            // Check if the player is within agro range
+            if (distanceToPlayer <= agroDistance)
             {
-                Vector3 direction = (player.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
+                // If the enemy is farther than the stopping distance, move towards the player
+                if (distanceToPlayer > stoppingDistance)
+                {
+                    Vector3 direction = (player.position - transform.position).normalized;
+                    transform.position += direction * speed * Time.deltaTime;
 
-                // Rotate to face the player
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-                swordAnimator.SetBool("IsAttacking", false);
+                    // Rotate to face the player
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+                    // Stop attacking animation if moving
+                    swordAnimator.SetBool("IsAttacking", false);
+                }
+                else
+                {
+                    // Start attacking animation when close to the player
+                    isAttacking = true;
+                    swordAnimator.SetBool("IsAttacking", true);
+                }
             }
             else
             {
-                isAttacking = true;
-                // Trigger the sword's attack animation when close to the player
-                swordAnimator.SetBool("IsAttacking", true);
+                // If the player is outside the agro distance, stop attacking and idle
+                swordAnimator.SetBool("IsAttacking", false);
             }
         }
     }
+
     void StopAttack()
     {
         isAttacking = false;
