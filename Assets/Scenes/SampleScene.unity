@@ -442,17 +442,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6968720693190282591, guid: 067f6d2d7b61e964c8b3334c9e0a8ae3, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6968720693190282591, guid: 067f6d2d7b61e964c8b3334c9e0a8ae3, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 8344993382004654058, guid: 067f6d2d7b61e964c8b3334c9e0a8ae3, type: 3}
+      propertyPath: m_Direction
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8859241492379805288, guid: 067f6d2d7b61e964c8b3334c9e0a8ae3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.19
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8859241492379805288, guid: 067f6d2d7b61e964c8b3334c9e0a8ae3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0019
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8859241492379805288, guid: 067f6d2d7b61e964c8b3334c9e0a8ae3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.41
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8859241492379805288, guid: 067f6d2d7b61e964c8b3334c9e0a8ae3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -508,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1682781247}
-  speed: 5
+  speed: 0.1
   rotationSpeed: 5
   stoppingDistance: 2
 --- !u!1660057539 &9223372036854775807

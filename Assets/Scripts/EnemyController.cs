@@ -25,7 +25,14 @@ public class EnemyController : MonoBehaviour
             if(posture <= 0)
             {
                 anim.enabled = false;
-                transform.parent.gameObject.GetComponent<Enemy>().changeDie();
+                if (transform.parent.gameObject.GetComponent<Enemy>() != null)
+                {
+                    transform.parent.gameObject.GetComponent<Enemy>().changeDie();
+                }
+                else
+                {
+                    transform.parent.gameObject.GetComponent<NormalEnemy>().changeDie();
+                }
             }
         }
     }
