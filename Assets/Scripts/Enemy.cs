@@ -23,9 +23,12 @@ public class Enemy : MonoBehaviour
     public float attackCooldown = 2f;
     private float lastAttackTime = 0f;
 
+    private Rigidbody rb;
+
     void Start()
     {
         swordAnimator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -48,7 +51,7 @@ public class Enemy : MonoBehaviour
                 {
                     Vector3 direction = (player.position - transform.position).normalized;
 
-                    transform.position += direction * speed * Time.deltaTime;
+                    rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
 
                     Quaternion lookRotation = Quaternion.LookRotation(direction);
                     transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
@@ -129,6 +132,10 @@ public class Enemy : MonoBehaviour
 
         transform.position = targetPosition;
 
+        Vector3 direction = (player.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = lookRotation;
+
         Invoke(nameof(ResetDodge), dodgeCooldown);
     }
 
@@ -143,9 +150,9 @@ public class Enemy : MonoBehaviour
         StartCoroutine("revive");
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void Kill()
     {
-        if (canDie && collision.gameObject.tag == "Katana")
+        if (canDie)
         {
             Destroy(this.gameObject);
         }
