@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class KatanaController : MonoBehaviour
 {
+
+    [SerializeField] Haptic h;
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Katana trigger detecta algo");
         if (other.tag == "EnemySword")
         {
+            h.HapticImpulse(Haptic.Contol.right, 0.5f, 0.5f);
             Debug.Log("Katana parry");
             other.GetComponent<EnemyController>().Parry();
         }
