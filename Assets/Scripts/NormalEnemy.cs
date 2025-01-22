@@ -10,8 +10,6 @@ public class NormalEnemy : MonoBehaviour
     public float stoppingDistance = 2f; // Distance at which the enemy stops moving
     public float agroDistance = 10f; // Distance at which the enemy starts chasing the player
 
-    private bool isAttacking = false;
-
     private Animator swordAnimator; // Reference to the sword's Animator
 
     void Start()
@@ -46,7 +44,6 @@ public class NormalEnemy : MonoBehaviour
                 else
                 {
                     // Start attacking animation when close to the player
-                    isAttacking = true;
                     swordAnimator.SetBool("IsAttacking", true);
                 }
             }
@@ -58,8 +55,4 @@ public class NormalEnemy : MonoBehaviour
         }
     }
 
-    void StopAttack()
-    {
-        isAttacking = false;
-    }
 }

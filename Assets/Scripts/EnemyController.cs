@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
                 }
                 else
                 {
-                    transform.parent.gameObject.GetComponent<NormalEnemy>().changeDie();
+                    //transform.parent.gameObject.GetComponent<NormalEnemy>().changeDie();
                 }
             }
         }
