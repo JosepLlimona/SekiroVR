@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
         {
             potions--;
             health += 50;
+            Debug.Log("Curat: Actual Life: " + health);
             if(health >= 100)
             {
                 health = 100;
@@ -35,5 +36,13 @@ public class PlayerController : MonoBehaviour
     {
         potions = 3;
         health = 100;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "EnemySword")
+        {
+            GetHurt(5);
+        }
     }
 }

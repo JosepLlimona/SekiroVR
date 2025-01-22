@@ -13,25 +13,25 @@ public class EnemyController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void Parry()
     {
-        if (collision.gameObject.tag == "Katana" && posture > 0)
+        if (posture > 0)
         {
             posture -= 10;
             Debug.Log(posture);
-            anim.SetTrigger("Reset");
+            //anim.SetTrigger("Reset");
             hit.Play();
 
-            if(posture <= 0)
+            if (posture <= 0)
             {
-                anim.enabled = false;
-                if (transform.parent.gameObject.GetComponent<Enemy>() != null)
+                //anim.enabled = false;
+                if (transform.root.gameObject.GetComponent<Enemy>() != null)
                 {
-                    transform.parent.gameObject.GetComponent<Enemy>().changeDie();
+                    transform.root.gameObject.GetComponent<Enemy>().changeDie();
                 }
                 else
                 {
-                    transform.parent.gameObject.GetComponent<NormalEnemy>().changeDie();
+                    transform.root.gameObject.GetComponent<NormalEnemy>().changeDie(gameObject);
                 }
             }
         }
@@ -39,7 +39,7 @@ public class EnemyController : MonoBehaviour
 
     public void revive()
     {
-        anim.enabled = true;
+        //anim.enabled = true;
         posture = 100;
     }
 }
