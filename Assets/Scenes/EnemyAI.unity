@@ -257,6 +257,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemic_LowPoly
       objectReference: {fileID: 0}
+    - target: {fileID: 5970050551922426695, guid: b68cb68b5de8d6b40b3a843062ba3dce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5974974916664219558, guid: b68cb68b5de8d6b40b3a843062ba3dce, type: 3}
       propertyPath: player
       value: 

@@ -41,10 +41,10 @@ public class Enemy : MonoBehaviour
             // Check if the player is within agro distance
             if (distanceToPlayer <= agroDistance)
             {
+                swordAnimator.SetBool("Inrange", true);
                 if (distanceToPlayer < stoppingDistance * 1.5f && canDodge)
                 {
                     Dodge();
-                    Debug.Log("Dodge");
                 }
 
                 if (distanceToPlayer > stoppingDistance)
@@ -66,8 +66,6 @@ public class Enemy : MonoBehaviour
                         attackType = Random.Range(0, 2); // Randomize attack type
                         swordAnimator.SetInteger("AttackType", attackType);
 
-                        Debug.Log("Attack: " + attackType);
-
                         // Get the current attack animation length
                         float attackAnimationLength = GetAttackAnimationLength();
 
@@ -83,6 +81,7 @@ public class Enemy : MonoBehaviour
             {
                 // If the player is out of agro distance, idle
                 swordAnimator.SetBool("IsAttacking", false);
+                swordAnimator.SetBool("Inrange", false);
             }
         }
     }
@@ -148,6 +147,7 @@ public class Enemy : MonoBehaviour
     {
         canDie = true;
         StartCoroutine("revive");
+        swordAnimator.SetBool("Parry", true);
     }
 
     public void Kill()
@@ -163,5 +163,6 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(2);
         canDie = true;
         transform.GetChild(0).GetComponent<EnemyController>().revive();
+        swordAnimator.SetBool("Parry", false);
     }
 }

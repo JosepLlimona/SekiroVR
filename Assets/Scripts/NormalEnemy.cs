@@ -37,6 +37,7 @@ public class NormalEnemy : MonoBehaviour
             // Check if the player is within agro range
             if (distanceToPlayer <= agroDistance)
             {
+                swordAnimator.SetBool("inRange", true);
                 // If the enemy is farther than the stopping distance, move towards the player
                 if (distanceToPlayer > stoppingDistance)
                 {
@@ -60,6 +61,7 @@ public class NormalEnemy : MonoBehaviour
             {
                 // If the player is outside the agro distance, stop attacking and idle
                 swordAnimator.SetBool("IsAttacking", false);
+                swordAnimator.SetBool("inRange", false);
             }
         }
     }
@@ -74,6 +76,7 @@ public class NormalEnemy : MonoBehaviour
         canDie = true;
         sword = child;
         StartCoroutine("revive");
+        swordAnimator.SetBool("Parry", true);
     }
 
     public void Kill()
@@ -89,5 +92,6 @@ public class NormalEnemy : MonoBehaviour
         yield return new WaitForSeconds(2);
         canDie = true;
         sword.GetComponent<EnemyController>().revive();
+        swordAnimator.SetBool("Parry", false);
     }
 }
