@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
 {
     int numEnemies = 6;
     [SerializeField] GameObject boss;
+    [SerializeField] GameObject win;
+
     public void UpdateEnemies()
     {
         numEnemies--;
@@ -14,7 +16,18 @@ public class GameController : MonoBehaviour
         if (numEnemies <= 0)
         {
             boss.SetActive(true);
-            if (boss.GetComponent<Enemy>().isDead == true) SceneManager.LoadScene("You_won");
         }
+    }
+
+    public void KillBoss()
+    {
+        StartCoroutine(Win());
+    }
+
+    private IEnumerator Win()
+    {
+        win.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Application.Quit();
     }
 }

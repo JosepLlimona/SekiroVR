@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TeleportationProvider tpp;
     [SerializeField] SnapTurnProviderBase stp;
     [SerializeField] TeleportationArea tpa;
+    [SerializeField] GameObject die;
 
     private BarraVida barraVida;
     private Curacions curacions;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
         barraVida.actualitzarVida(health);
         if(health <= 0)
         {
-            SceneManager.LoadScene("GameOver");
+            StartCoroutine(Die());
         }
     }
 
@@ -89,5 +90,13 @@ public class PlayerController : MonoBehaviour
     {
         barraVida = GetComponent<BarraVida>();
         curacions = GetComponent<Curacions>();
+    }
+
+    private IEnumerator Die()
+    {
+        die.SetActive(true);
+        Time.timeScale = 0;
+        yield return new WaitForSeconds(3);
+        Application.Quit();
     }
 }

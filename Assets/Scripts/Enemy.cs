@@ -22,8 +22,9 @@ public class Enemy : MonoBehaviour
 
     public float attackCooldown = 2f;
     private float lastAttackTime = 0f;
-    public bool isDead = false;
     private Rigidbody rb;
+
+    [SerializeField] GameController gc;
 
     void Start()
     {
@@ -154,8 +155,8 @@ public class Enemy : MonoBehaviour
     {
         if (canDie)
         {
+            gc.KillBoss();
             Destroy(this.gameObject);
-            isDead = true;
         }
     }
 
