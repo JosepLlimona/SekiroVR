@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public class EndingScene : MonoBehaviour
 {
     public float delay = 5.0f;
 
@@ -18,4 +19,5 @@ public class SceneManager : MonoBehaviour
                 UnityEditor.EditorApplication.isPlaying = false;
         #endif
     }
+
 }

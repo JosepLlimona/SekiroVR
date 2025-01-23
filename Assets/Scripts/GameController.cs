@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameController : MonoBehaviour
         if (numEnemies <= 0)
         {
             boss.SetActive(true);
+            if (boss.GetComponent<Enemy>().isDead == true) SceneManager.LoadScene("You_won");
         }
     }
 }

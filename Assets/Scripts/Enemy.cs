@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     public float attackCooldown = 2f;
     private float lastAttackTime = 0f;
-
+    public bool isDead = false;
     private Rigidbody rb;
 
     void Start()
@@ -155,6 +155,7 @@ public class Enemy : MonoBehaviour
         if (canDie)
         {
             Destroy(this.gameObject);
+            isDead = true;
         }
     }
 

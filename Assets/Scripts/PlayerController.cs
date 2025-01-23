@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
         barraVida.actualitzarVida(health);
         if(health <= 0)
         {
-            Debug.Log("Death");
+            SceneManager.LoadScene("GameOver");
         }
     }
 
