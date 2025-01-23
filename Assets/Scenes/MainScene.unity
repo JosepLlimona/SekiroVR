@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ce18fc300da5f14eab2c5185ef18a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 0}
+  boss: {fileID: 403041177}
 --- !u!4 &172712273
 Transform:
   m_ObjectHideFlags: 0
@@ -1107,6 +1107,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b68cb68b5de8d6b40b3a843062ba3dce, type: 3}
+--- !u!1 &403041177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2096689793707288470, guid: 20535d7a470fdb343b59384ea8f20e32, type: 3}
+  m_PrefabInstance: {fileID: 895993391}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &426260282 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2529395002173840607, guid: fa91677bed5ea9244922c24bf31df43a, type: 3}
@@ -1870,6 +1875,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1288749352120250290, guid: 20535d7a470fdb343b59384ea8f20e32, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 426260293}
     - target: {fileID: 1608665701372689708, guid: 20535d7a470fdb343b59384ea8f20e32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.63193
