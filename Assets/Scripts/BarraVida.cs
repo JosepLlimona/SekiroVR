@@ -9,6 +9,6 @@ public class BarraVida : MonoBehaviour
 
     public float vidaActual;
     public void actualitzarVida(int vida){
-        barravida.fillAmount = vida/100;
+        barravida.fillAmount = vida/100f;
     }
 }

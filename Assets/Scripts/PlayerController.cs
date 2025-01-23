@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerController : MonoBehaviour
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public void GetHurt(int hurt)
     {
         health -= hurt;
+        Debug.Log("Hurting: " + health);
         barraVida.actualitzarVida(health);
         if(health <= 0)
         {
@@ -28,18 +30,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Heal()
+    public void Heal(InputAction.CallbackContext context)
     {
-        if (potions > 0)
+        if (context.started)
         {
-            potions--;
-            curacions.updateCuracions(potions);
-            health += 50;
-            barraVida.actualitzarVida(health);
-                Debug.Log("Curat: Actual Life: " + health);
-            if(health >= 100)
+            if (potions > 0)
             {
-                health = 100;
+                potions--;
+                curacions.updateCuracions(potions);
+                health += 50;
+                barraVida.actualitzarVida(health);
+                Debug.Log("Curat: Actual Life: " + health);
+                if (health >= 100)
+                {
+                    health = 100;
+                }
             }
         }
     }

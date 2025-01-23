@@ -19,6 +19,7 @@ public class NormalEnemy : MonoBehaviour
     private Rigidbody rb;
 
     private GameObject sword;
+    [SerializeField] GameController gc;
 
     void Start()
     {
@@ -83,6 +84,7 @@ public class NormalEnemy : MonoBehaviour
     {
         if (canDie)
         {
+            gc.UpdateEnemies();
             Destroy(this.gameObject);
         }
     }
