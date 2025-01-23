@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ContinuousTurnProviderBase ctp;
     [SerializeField] TeleportationProvider tpp;
     [SerializeField] SnapTurnProviderBase stp;
+    [SerializeField] TeleportationArea tpa;
 
 
     public void GetHurt(int hurt)
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         ctp.enabled = false;
         tpp.enabled = true;
         stp.enabled = true;
+        tpa.enabled = true;
     }
 
     public void changeToCont()
@@ -68,5 +70,6 @@ public class PlayerController : MonoBehaviour
         ctp.enabled = true;
         tpp.enabled = false;
         stp.enabled = false;
+        tpa.enabled = false;
     }
 }
