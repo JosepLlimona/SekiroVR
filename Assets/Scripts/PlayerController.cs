@@ -15,10 +15,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] SnapTurnProviderBase stp;
     [SerializeField] TeleportationArea tpa;
 
+    private BarraVida barraVida;
+    private Curacions curacions;
 
     public void GetHurt(int hurt)
     {
         health -= hurt;
+        barraVida.actualitzarVida(health);
         if(health <= 0)
         {
             Debug.Log("Death");
@@ -30,8 +33,10 @@ public class PlayerController : MonoBehaviour
         if (potions > 0)
         {
             potions--;
+            curacions.updateCuracions(potions);
             health += 50;
-            Debug.Log("Curat: Actual Life: " + health);
+            barraVida.actualitzarVida(health);
+                Debug.Log("Curat: Actual Life: " + health);
             if(health >= 100)
             {
                 health = 100;
@@ -43,6 +48,8 @@ public class PlayerController : MonoBehaviour
     {
         potions = 3;
         health = 100;
+        curacions.updateCuracions(potions);
+        barraVida.actualitzarVida(health);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -71,5 +78,10 @@ public class PlayerController : MonoBehaviour
         tpp.enabled = false;
         stp.enabled = false;
         tpa.enabled = false;
+    }
+    public void Start()
+    {
+        barraVida = GetComponent<BarraVida>();
+        curacions = GetComponent<Curacions>();
     }
 }

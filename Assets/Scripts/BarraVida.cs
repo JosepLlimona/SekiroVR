@@ -8,8 +8,7 @@ public class BarraVida : MonoBehaviour
     public Image barravida;
 
     public float vidaActual;
-    void Update()
-    {
-        barravida.fillAmount = vidaActual/100;
+    public void actualitzarVida(int vida){
+        barravida.fillAmount = vida/100;
     }
 }

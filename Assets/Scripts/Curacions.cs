@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class Curacions : MonoBehaviour
 {
-    public int nCuracions;
     public Image curacions;
 
     public Sprite c0;
     public Sprite c1;
     public Sprite c2;
     public Sprite c3;
-    void Update()
+    public void updateCuracions(int nCuracions)
     {
         if(nCuracions == 0) curacions.GetComponent<Image>().sprite = c0;
         if(nCuracions == 1) curacions.GetComponent<Image>().sprite = c1;
